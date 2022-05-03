@@ -55,13 +55,17 @@ enum class CountryISO(val iso: String){
     }
 }
 
+typealias SelectionAction = () -> Unit
+
 @Composable
-fun ProductCard(name: String, summary: String, price: Double, currency: String, country: CountryISO ) {
+fun ProductCard(name: String, summary: String, price: Double, currency: String, country: CountryISO, selected: SelectionAction ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable { }
+            .clickable {
+                selected()
+            }
             .size(480.dp),
         elevation = 10.dp,
         shape = MaterialTheme.shapes.medium
@@ -110,6 +114,7 @@ fun ProductCardPreview() {
         ProductCard("Cafe de Brasil",
             "Cafe originario de las montañas",
             35.0, "USD",
-            CountryISO.BRA)
+            CountryISO.BRA,
+            ){}
     }
 }
