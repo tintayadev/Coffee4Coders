@@ -63,10 +63,16 @@ fun DetailScreen(navController: NavController, countryIso: CountryISO) {
 
                     Spacer(modifier = Modifier.height(24.dp))
 
-                    Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                        Text(text = "$ 25.0 USD", style = MaterialTheme.typography.h5, textAlign = TextAlign.End)
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        Text(
+                            text = "$ 25.0 USD",
+                            style = MaterialTheme.typography.h5,
+                            textAlign = TextAlign.End
+                        )
                         CustomButton(label = "Continuar") {
-                            navController.navigate("ckeckout"){
+                            navController.navigate("checkout/${countryIso.iso}"){
                                 launchSingleTop = true
                             }
                         }

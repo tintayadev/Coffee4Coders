@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.coffee4coders.ui.components.CountryISO
+import com.example.coffee4coders.ui.screens.CheckoutScreen
 import com.example.coffee4coders.ui.screens.DetailScreen
 import com.example.coffee4coders.ui.screens.FeedScreen
 import com.example.coffee4coders.ui.theme.Coffee4codersTheme
@@ -41,8 +42,12 @@ fun NavigationHost() {
                     val countryIso = CountryISO.valueOf(countryIsoString)
                     DetailScreen(navController, countryIso)
                 }
+                composable(route = "checkout/{countryIso}"){ backStackEntry ->
+                    val countryIsoString = backStackEntry.arguments?.getString("countryIso") ?: "COL"
+                    val countryIso = CountryISO.valueOf(countryIsoString)
+                    CheckoutScreen(navController, countryIso)
+                }
             }
         }
     }
-
 }
