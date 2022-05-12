@@ -18,12 +18,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.coffee4coders.models.Product
 import com.example.coffee4coders.ui.components.*
+import com.example.coffee4coders.ui.theme.Coffee4codersTheme
+import com.example.coffee4coders.utilities.MockDataProvider
 
 
 @Composable
-fun DetailScreen(navController: NavController, countryIso: CountryISO) {
-
+fun DetailScreen(navController: NavController, product: Product) {
+    val countryIso = CountryISO.valueOf(product.countryISO)
     Scaffold(
         topBar = {
             CustomAppBar(navigationIcon = Icons.Filled.ArrowBack){
@@ -51,15 +54,15 @@ fun DetailScreen(navController: NavController, countryIso: CountryISO) {
                 Column(
                     modifier = Modifier.padding(16.dp)
                 ) {
-                    TitleText(title = "Cafe de Colombia")
+                    TitleText(title = product.name)
                     Text(
-                        text = "Lorem largo muy largo, ya luego debes busacr o completar con textos String en un xml :D. Ahi ya con textos con sentido, no asi todo feo :c.",
+                        text = product.summary,
                         style = MaterialTheme.typography.caption,
                     )
 
                     Spacer(modifier = Modifier.height(24.dp))
 
-                    BodyText(body = "Lorem largo muy largo, ya luego debes busacr o completar con textos String en un xml :D. Ahi ya con textos con sentido, no asi todo feo :c.Lorem largo muy largo, ya luego debes busacr o completar con textos String en un xml :D. Ahi ya con textos con sentido, no asi todo feo :c.")
+                    BodyText(body = product.description)
 
                     Spacer(modifier = Modifier.height(24.dp))
 
@@ -67,12 +70,12 @@ fun DetailScreen(navController: NavController, countryIso: CountryISO) {
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Text(
-                            text = "$ 25.0 USD",
+                            text = "$ ${product.price} ${product.currency}",
                             style = MaterialTheme.typography.h5,
                             textAlign = TextAlign.End
                         )
                         CustomButton(label = "Continuar") {
-                            navController.navigate("checkout/${countryIso.iso}"){
+                            navController.navigate("checkout/${product.id}"){
                                 launchSingleTop = true
                             }
                         }
@@ -86,6 +89,13 @@ fun DetailScreen(navController: NavController, countryIso: CountryISO) {
 @Preview(showBackground = true)
 @Composable
 fun DetailScreenPreview() {
-    val navController = rememberNavController()
-    DetailScreen(navController, CountryISO.BRA)
+    val product = MockDataProvider.getProductBy(0)
+    if (product!= null){
+        val navController = rememberNavController()
+        DetailScreen(navController, product)
+    }else{
+        Text(text = "Error en preview")
+    }
+
+
 }

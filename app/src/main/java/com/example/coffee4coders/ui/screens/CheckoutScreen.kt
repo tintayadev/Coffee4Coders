@@ -15,11 +15,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.coffee4coders.models.Product
 import com.example.coffee4coders.ui.components.*
 import com.example.coffee4coders.ui.theme.Coffee4codersTheme
+import com.example.coffee4coders.utilities.MockDataProvider
 
 @Composable
-fun CheckoutScreen(navController: NavController, country: CountryISO) {
+fun CheckoutScreen(navController: NavController, product: Product) {
+
     val cities = listOf(
         "Mexico City, Mexico",
         "The Habana, Cuba",
@@ -41,7 +44,7 @@ fun CheckoutScreen(navController: NavController, country: CountryISO) {
     Scaffold(
         topBar = {
             CustomAppBar(navigationIcon = Icons.Filled.ArrowBack){
-                navController.navigate("detail/${country.iso}")
+                navController.navigate("detail/${product.id}")
             }
         },
         content = {
@@ -49,11 +52,7 @@ fun CheckoutScreen(navController: NavController, country: CountryISO) {
                 modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
                 ProductCard(
-                    name = "Cafe de Col",
-                    summary = "Cafe de las montañas",
-                    price = 34.0,
-                    currency = "USD",
-                    country = country
+                    product
                 ) {
 
                 }
@@ -111,8 +110,13 @@ fun CheckoutScreen(navController: NavController, country: CountryISO) {
 @Preview(showBackground = true)
 @Composable
 fun CheckoutScreenPreview() {
-    val navController = rememberNavController()
-    Coffee4codersTheme {
-        CheckoutScreen(navController, CountryISO.COL)
+    val product = MockDataProvider.getProductBy(0)
+    if (product!= null){
+        val navController = rememberNavController()
+        Coffee4codersTheme {
+            CheckoutScreen(navController, product)
+        }
+    }else{
+        Text(text = "Error en preview")
     }
 }

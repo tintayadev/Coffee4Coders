@@ -19,13 +19,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.coffee4coders.ui.components.*
 import com.example.coffee4coders.ui.theme.Coffee4codersTheme
+import com.example.coffee4coders.utilities.MockDataProvider
 
 @Composable
 fun FeedScreen(navController: NavController) {
 
-    val list = listOf<CountryISO>(
-        CountryISO.BRA, CountryISO.COL, CountryISO.NIC, CountryISO.CRI
-    )
+    val list = MockDataProvider.listOfProducts()
     Scaffold(
         topBar = { CustomAppBar(title = "Coffee 4 Coders",) },
         content = {
@@ -42,12 +41,9 @@ fun FeedScreen(navController: NavController) {
                                 BodyText(body = "Lorem ipsum apliacion que ya saldra a produccion. Busca otro tipo de texto :D.")
                             }
                         }
-                        items(list) { country ->
-                            ProductCard("Cafe de Brasil",
-                                "Cafe originario de las montañas",
-                                35.0, "USD",
-                                country = country){
-                                navController.navigate("detail/${country.iso}"){
+                        items(list) { product ->
+                            ProductCard(product){
+                                navController.navigate("detail/${product.id}"){
                                     launchSingleTop = true
                                 }
                             }
