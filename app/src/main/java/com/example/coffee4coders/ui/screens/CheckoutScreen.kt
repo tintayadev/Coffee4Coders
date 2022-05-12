@@ -40,6 +40,7 @@ fun CheckoutScreen(navController: NavController, product: Product) {
     var phone by remember { mutableStateOf("")}
     var address by remember { mutableStateOf("")}
     var city by remember { mutableStateOf("")}
+    var message by remember { mutableStateOf<String?>(null)}
     
     Scaffold(
         topBar = {
@@ -48,15 +49,19 @@ fun CheckoutScreen(navController: NavController, product: Product) {
             }
         },
         content = {
+            Alert("Felicidades", message){
+                navController.navigate("feed"){
+                    launchSingleTop = true
+                    popUpTo("feed")
+                }
+            }
             Column(
                 modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
                 ProductCard(
                     product
                 ) {
-
                 }
-
                 Column(
                     modifier = Modifier.padding(16.dp)
                 ) {
@@ -95,7 +100,11 @@ fun CheckoutScreen(navController: NavController, product: Product) {
                             textAlign = TextAlign.Start
                         )
                         CustomButton(label = "Finalizar pedido") {
-                            
+                            //TODo: Validar todos los campos
+
+
+                            message = "Tu pedido ha sido creado Uwu"
+
                         }
                     }
                 }

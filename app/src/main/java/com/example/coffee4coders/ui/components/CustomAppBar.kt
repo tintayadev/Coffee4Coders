@@ -16,7 +16,7 @@ fun CustomAppBar(
     navigationIcon: ImageVector? = null,
     navigationAction: NavigationAction? = null
 ) {
-    val titleText = title ?: ""
+    val titleText = title ?: "Coffe4Coders"
     if(navigationIcon != null && navigationAction != null) {
         TopAppBar(
             title = { Text(titleText)},
